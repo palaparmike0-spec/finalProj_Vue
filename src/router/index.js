@@ -6,6 +6,10 @@ import PostItem from '../views/PostItem.vue'
 
 import ItemDetails from '../views/ItemDetails.vue'
 import Profile from '../views/Profile.vue'
+import About from '../views/About.vue'
+import Search from '../views/Search.vue'
+import Messages from '../views/Messages.vue'
+import Cart from '../views/Cart.vue'
 
 const routes = [
     {
@@ -27,6 +31,22 @@ const routes = [
     {
         path: '/profile',
         component: Profile
+    },
+    {
+        path: '/about',
+        component: About
+    },
+    {
+        path: '/search',
+        component: Search
+    },
+    {
+        path: '/messages',
+        component: Messages
+    },
+    {
+        path: '/cart',
+        component: Cart
     }
 ]
 
