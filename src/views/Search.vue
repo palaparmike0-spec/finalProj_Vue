@@ -1,9 +1,11 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import ProductArtwork from '../components/ProductArtwork.vue'
+import { useCart } from '../composables/useCart.js'
 import { sampleProducts, useMarketplaceProducts } from '../composables/useMarketplaceProducts.js'
 
 const { products, loadProducts } = useMarketplaceProducts()
+const { addToCart } = useCart()
 const search = ref('')
 const errorMessage = ref('')
 const allProducts = computed(() => [...sampleProducts, ...products.value])
@@ -77,6 +79,7 @@ onMounted(() => {
                         <strong>
                             {{ product.type === 'For Trade' ? 'Can be traded (through another product)' : `₱${Number(product.type === 'For Rent' ? product.rentalRatePerDay ?? product.price : product.price).toLocaleString('en-PH')}${product.type === 'For Rent' ? ' / day' : ''}` }}
                         </strong>
+                        <button type="button" class="cart-button" @click.stop="addToCart(product)">Add to cart</button>
                         <span class="secondary-button">View item</span>
                     </div>
                 </div>
@@ -230,6 +233,26 @@ onMounted(() => {
     min-height: 44px;
     padding: 0 11px;
     font-size: 11px;
+}
+
+.cart-button {
+    min-height: 36px;
+    flex: 0 0 auto;
+    padding: 0 10px;
+    border: 1px solid #d8e0ca;
+    border-radius: 999px;
+    background: #fff;
+    color: #416a49;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.cart-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    background: #f0f3e4;
 }
 
 .empty-state {

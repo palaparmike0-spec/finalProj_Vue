@@ -1,5 +1,8 @@
 <script setup>
 import tubigonLogo from '../assets/images/products/tubigon logo.jpg'
+import { useCart } from '../composables/useCart.js'
+
+const { cartCount } = useCart()
 </script>
 
 <template>
@@ -39,6 +42,7 @@ import tubigonLogo from '../assets/images/products/tubigon logo.jpg'
         <RouterLink class="nav-item" to="/cart" aria-label="Cart">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6" /><circle cx="10" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></svg>
             <span>Cart</span>
+            <span v-if="cartCount" class="cart-count" :aria-label="`${cartCount} item${cartCount > 1 ? 's' : ''} in cart`">{{ cartCount }}</span>
         </RouterLink>
         <RouterLink class="nav-item" to="/profile" aria-label="Profile">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path d="M5 21a7 7 0 0 1 14 0" /></svg>
@@ -166,6 +170,17 @@ import tubigonLogo from '../assets/images/products/tubigon logo.jpg'
 .nav-item:hover,
 .nav-item.router-link-active {
     color: #416a49;
+}
+
+.cart-count {
+    margin-top: -2px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #e63946;
+    color: #fff;
+    font: 700 9px/1.5 "Avenir Next", Avenir, sans-serif;
 }
 
 @media (max-width: 560px) {

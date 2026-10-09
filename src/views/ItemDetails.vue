@@ -2,10 +2,12 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ProductArtwork from '../components/ProductArtwork.vue'
+import { useCart } from '../composables/useCart.js'
 import { sampleProducts, useMarketplaceProducts } from '../composables/useMarketplaceProducts.js'
 
 const route = useRoute()
 const { products, loadProducts } = useMarketplaceProducts()
+const { addToCart } = useCart()
 const errorMessage = ref('')
 const allProducts = computed(() => [...sampleProducts, ...products.value])
 const product = computed(() => {
@@ -95,6 +97,7 @@ onMounted(() => {
                 <p class="detail-description">{{ detailedDescription }}</p>
                 <p class="local-note"><span aria-hidden="true">⌖</span> Shared by someone in the Tubigon community</p>
                 <div class="detail-actions">
+                    <button type="button" class="secondary-button" @click="addToCart(product)">Add to cart</button>
                     <RouterLink class="primary-button" to="/messages">Contact seller</RouterLink>
                     <RouterLink class="secondary-button" to="/">Back to marketplace</RouterLink>
                 </div>
