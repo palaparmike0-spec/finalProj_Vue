@@ -163,10 +163,10 @@ onMounted(() => {
     min-height: 280px;
     overflow: hidden;
     padding: 37px clamp(22px, 5vw, 48px);
-    border-color: rgba(238, 239, 209, 0.72);
+    border-color: rgba(31, 32, 3, 0.72);
     background:
         linear-gradient(90deg, rgba(247, 248, 230, 0.96) 0%, rgba(239, 243, 211, 0.91) 54%, rgba(223, 234, 195, 0.52) 100%),
-        url("../assets/images/products/tubigonview.webp") center 52% / cover;
+        url("../assets/images/products/tubigonplaza.jpeg") center 55% / cover;
 }
 
 .welcome-copy {
