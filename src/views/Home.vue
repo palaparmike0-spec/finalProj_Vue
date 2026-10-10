@@ -1,11 +1,9 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import ProductArtwork from '../components/ProductArtwork.vue'
-import { useCart } from '../composables/useCart.js'
 import { sampleProducts, useMarketplaceProducts } from '../composables/useMarketplaceProducts.js'
 
 const { products, loadProducts } = useMarketplaceProducts()
-const { addToCart } = useCart()
 const storageError = ref('')
 const shelfRefs = ref({})
 const allProducts = computed(() => [...sampleProducts, ...products.value])
@@ -72,7 +70,6 @@ onMounted(() => {
                             <p class="product-description">{{ product.description || 'A lovely local find, ready for a new home.' }}</p>
                             <div class="product-footer">
                                 <strong>₱{{ Number(product.price).toLocaleString('en-PH') }}</strong>
-                                <button type="button" class="cart-button" @click.stop="addToCart(product)">Add to cart</button>
                                 <span class="view-button">View item <span aria-hidden="true">↗</span></span>
                             </div>
                         </div>
@@ -105,7 +102,6 @@ onMounted(() => {
                             <p class="product-description">{{ product.description || 'Open to a fair trade with someone nearby.' }}</p>
                             <div class="product-footer">
                                 <strong class="trade-price">Can be traded (through another product)</strong>
-                                <button type="button" class="cart-button" @click.stop="addToCart(product)">Add to cart</button>
                                 <span class="view-button">View item <span aria-hidden="true">↗</span></span>
                             </div>
                         </div>
@@ -142,7 +138,6 @@ onMounted(() => {
                             </p>
                             <div class="product-footer">
                                 <strong class="rental-rate">₱{{ Number(product.rentalRatePerDay ?? product.price).toLocaleString('en-PH') }} / day</strong>
-                                <button type="button" class="cart-button" @click.stop="addToCart(product)">Add to cart</button>
                                 <span class="view-button">View item <span aria-hidden="true">↗</span></span>
                             </div>
                         </div>
@@ -418,30 +413,6 @@ onMounted(() => {
 
 .view-button span {
     margin-left: 3px;
-}
-
-.cart-button {
-    min-height: 36px;
-    flex: 0 0 auto;
-    padding: 0 10px;
-    border: 1px solid #d8e0ca;
-    border-radius: 999px;
-    background: #fff;
-    color: #416a49;
-    font: inherit;
-    font-size: 10px;
-    font-weight: 750;
-    cursor: pointer;
-    transition: background-color 150ms ease, transform 150ms ease;
-}
-
-.cart-button:hover:not(:disabled) {
-    transform: translateY(-1px);
-    background: #f0f3e4;
-}
-
-.cart-button:active {
-    transform: translateY(0);
 }
 
 .empty-state {
