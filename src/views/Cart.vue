@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import ProductArtwork from '../components/ProductArtwork.vue'
 import { useCart } from '../composables/useCart.js'
 
-const { cartItems, cartCount, cartTotal, removeFromCart, updateQuantity, clearCart } = useCart()
+const { cartItems, cartCount, cartTotal, removeFromCart, clearCart } = useCart()
 const notice = ref('')
 
 function itemPriceLabel(item) {
@@ -18,7 +18,7 @@ function itemPriceLabel(item) {
 
 function itemLineTotal(item) {
     if (item.type === 'For Trade') return '—'
-    return `₱${Number(item.unitPrice * item.quantity).toLocaleString('en-PH')}`
+    return `₱${Number(item.unitPrice).toLocaleString('en-PH')}`
 }
 
 function removeItem(item) {
@@ -52,12 +52,7 @@ function clearAll() {
                         <h3>{{ item.name }}</h3>
                         <p class="product-type">{{ item.type }} <span>·</span> {{ item.condition || 'Pre-loved' }}</p>
                         <p class="item-price">{{ itemPriceLabel(item) }}</p>
-                        <label class="qty-label" for="qty-{{ item.id }}">Quantity</label>
-                        <div class="qty-controls">
-                            <button id="qty-{{ item.id }}" type="button" class="qty-btn" aria-label="Decrease quantity" @click="updateQuantity(item.id, -1)">−</button>
-                            <span class="qty-value">{{ item.quantity }}</span>
-                            <button type="button" class="qty-btn" aria-label="Increase quantity" @click="updateQuantity(item.id, 1)">+</button>
-                        </div>
+                        <RouterLink class="secondary-button" to="/messages">Contact seller</RouterLink>
                     </div>
                     <div class="cart-item-sum">
                         <strong class="item-line-total">{{ itemLineTotal(item) }}</strong>
@@ -75,9 +70,8 @@ function clearAll() {
                     <span>Estimated total</span>
                     <strong>₱{{ Number(cartTotal).toLocaleString('en-PH') }}</strong>
                 </div>
-                <p class="cart-note">Rental rates are shown per day. Final checkout is not connected yet.</p>
+                <p class="cart-note">Contact each seller to arrange a sale, trade, or rental.</p>
                 <div class="cart-actions">
-                    <button type="button" class="primary-button" disabled>Proceed to checkout</button>
                     <button type="button" class="danger-button" @click="clearAll">Clear cart</button>
                 </div>
             </div>
@@ -150,52 +144,6 @@ function clearAll() {
     color: #426847;
     font-size: 13px;
     font-weight: 700;
-}
-
-.qty-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #6a7658;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.qty-controls {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    border: 1px solid #d7dfcd;
-    border-radius: 999px;
-    background: #fff;
-}
-
-.qty-btn {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    place-items: center;
-    border: 0;
-    border-radius: 999px;
-    background: transparent;
-    color: #456149;
-    font-size: 19px;
-    font-weight: 600;
-    line-height: 1;
-    cursor: pointer;
-}
-
-.qty-btn:hover {
-    background: #f0f3e4;
-}
-
-.qty-value {
-    min-width: 22px;
-    padding: 0 4px;
-    color: #35513a;
-    font-size: 13px;
-    font-weight: 700;
-    text-align: center;
 }
 
 .cart-item-sum {

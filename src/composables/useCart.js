@@ -38,8 +38,7 @@ function cartItemFor(product) {
         type: product.type ?? '',
         condition: product.condition ?? '',
         isRental,
-        unitPrice,
-        quantity: 1
+        unitPrice
     }
 }
 
@@ -47,29 +46,21 @@ const cartItems = ref(loadFromStorage())
 
 export function useCart() {
     const cartCount = computed(() =>
-        cartItems.value.reduce((sum, item) => sum + item.quantity, 0)
+        cartItems.value.length
     )
 
     const cartTotal = computed(() =>
-        cartItems.value.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0)
+        cartItems.value.reduce((sum, item) => sum + item.unitPrice, 0)
     )
 
     function findItem(productId) {
         return cartItems.value.find(item => item.id === productId)
     }
 
-    function addToCart(product, quantity = 1) {
-        const qty = Math.max(1, Number(quantity) || 1)
-        const existing = findItem(product.id)
+    function addToCart(product) {
+        if (findItem(product.id)) return
 
-        if (existing) {
-            existing.quantity += qty
-        } else {
-            const item = cartItemFor(product)
-            item.quantity = qty
-            cartItems.value.push(item)
-        }
-
+        cartItems.value.push(cartItemFor(product))
         saveToStorage(cartItems.value)
     }
 
@@ -79,14 +70,6 @@ export function useCart() {
             cartItems.value.splice(index, 1)
             saveToStorage(cartItems.value)
         }
-    }
-
-    function updateQuantity(productId, delta) {
-        const item = findItem(productId)
-        if (!item) return
-
-        item.quantity = Math.max(1, item.quantity + (Number(delta) || 0))
-        saveToStorage(cartItems.value)
     }
 
     function clearCart() {
@@ -104,7 +87,6 @@ export function useCart() {
         cartTotal,
         addToCart,
         removeFromCart,
-        updateQuantity,
         clearCart,
         isInCart
     }
